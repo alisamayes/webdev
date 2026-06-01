@@ -1,0 +1,5 @@
+To start a new project
+
+npm create vite@latest
+npm install
+npm run dev
