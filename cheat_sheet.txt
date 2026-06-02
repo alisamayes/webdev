@@ -3,3 +3,7 @@ To start a new project
 npm create vite@latest
 npm install
 npm run dev
+
+
+When making a db, add this to package.json in the vite section
+"server": "json-server -p 3001 db.json"
