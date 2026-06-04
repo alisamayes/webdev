@@ -1,44 +1,50 @@
 {
-    "persons":[
-      { 
-        "name": "Arto Hellas", 
-        "number": "040-123456",
-        "id": "1"
-      },
-      { 
-        "name": "Ada Lovelace", 
-        "number": "39-44-5323523",
-        "id": "2"
-      },
-      { 
-        "name": "Dan Abramov", 
-        "number": "12-43-234345",
-        "id": "3"
-      },
-      { 
-        "name": "Mary Poppendieck", 
-        "number": "39-23-6423122",
-        "id": "4"
-      },
-      {
-        "name": "Redgon Dragonia", 
-        "number": "72-48-93651200",
-        "id": "5"
-      },
-      {
-        "name": "Greengon Dragonia", 
-        "number": "72-48-17651221",
-        "id": "6"
-      },
-      {
-        "name": "Purplegon Dracaria", 
-        "number": "72-49-00237878",
-        "id": "5"
-      },
-      {
-        "name": "Cyangon Dragos", 
-        "number": "72-50-55387299",
-        "id": "5"
-      }
-    ]
-  }
+  "persons": [
+    {
+      "name": "Arto Hellas",
+      "number": "040-123456",
+      "id": "1"
+    },
+    {
+      "name": "Ada Lovelace",
+      "number": "39-44-5323523",
+      "id": "2"
+    },
+    {
+      "name": "Redgon Dragonia",
+      "number": "72-48-93651200",
+      "id": "5"
+    },
+    {
+      "name": "Greengon Dragonia",
+      "number": "72-48-17651221",
+      "id": "6"
+    },
+    {
+      "name": "Purplegon Dracaria",
+      "number": "72-49-00237878",
+      "id": "7"
+    },
+    {
+      "name": "Cyangon Dragos",
+      "number": "72-50-55387299",
+      "id": "8"
+    },
+    {
+      "name": "Blackgon Dragonia",
+      "number": "72-48-55348951",
+      "id": "OKeFU7fC85Y"
+    },
+    {
+      "name": "Whitegon Dragonia",
+      "number": "72-48-85372014",
+      "id": "Wz1DM6Vw55Y"
+    },
+    {
+      "name": "Yellowgon Dracaria",
+      "number": "72-49-00787321",
+      "id": "Baaptei6NWw"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

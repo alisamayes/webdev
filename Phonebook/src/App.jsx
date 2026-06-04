@@ -1,68 +1,97 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import Notification from './components/Notification'
+import personService from './services/persons'
+import './index.css'
 
-
-/*
-
-
-const App = () => {
-  const [notes, setNotes] = useState([])
-  const [newNote, setNewNote] = useState('')
-  const [showAll, setShowAll] = useState(true)
-
-
-  useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/notes')
-      .then(response => {
-        console.log('promise fulfilled')
-        setNotes(response.data)
-      })
-  }, [])
-  console.log('render', notes.length, 'notes')
-
-  // ...
-}
-*/
+const Button = ({ onClick, text }) => (
+  <button onClick={onClick}>{text}</button>
+)
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [notification, setNotification] = useState(null)
+
+  const showNotification = (message, type = 'error') => {
+    setNotification({ message, type })
+    setTimeout(() => {
+      setNotification(null)
+    }, 5000)
+  }
 
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
+    personService.getAll().then(initialPersons => {
+      setPersons(initialPersons)
+    })
   }, [])
-  console.log('render', persons.length, 'notes')
 
-  const addPerson = (event) =>  {
+  const deletePerson = id => {
+    personService
+      .remove(id)
+      .then(() => {
+        setPersons(prev => prev.filter(p => String(p.id) !== String(id)))
+      })
+  }
+
+  const addPerson = (event) => {
     event.preventDefault()
+    const personObject = { name: newName, number: newNumber }
+    const existing = persons.find((p) => p.name === newName)
 
-    const newId = persons.length + 1
-    const personObject = {name: newName, number: newNumber, id: newId}
+    if (existing) {
+      if (
+        !window.confirm(
+          `${newName} is already added to phonebook, replace old number with a new one?`
+        )
+      ) {
+        return
+      }
 
-    const alreadyExists = persons.some((p) => p.name === newName)
-
-    if (alreadyExists) {
-      alert(`${newName} is already added to phonebook`)
+      const changedPerson = { ...existing, number: newNumber }
+      personService
+        .update(existing.id, changedPerson)
+        .then(returnedPerson => {
+          setPersons(prev =>
+            prev.map(p =>
+              String(p.id) === String(existing.id) ? returnedPerson : p
+            )
+          )
+          setNewName('')
+          setNewNumber('')
+          showNotification(
+            `Updated ${returnedPerson.name}'s number to ${returnedPerson.number}`,
+            'success'
+          )
+        })
+        .catch(() => {
+          showNotification(
+            `Person '${existing.name}' has already been removed from the server`,
+            'error'
+          )
+          setPersons(prev =>
+            prev.filter(p => String(p.id) !== String(existing.id))
+          )
+        })
+      return
     }
-    else {
-      setPersons(persons.concat(personObject))
-    }
-    setNewName('')
-    setNewNumber('')
+
+    personService
+      .create(personObject)
+      .then(returnedPerson => {
+        setPersons(prev => prev.concat(returnedPerson))
+        setNewName('')
+        setNewNumber('')
+        showNotification(
+          `Added ${returnedPerson.name} ${returnedPerson.number}`,
+          'success'
+        )
+      })
   }
 
   const personsToShow =
@@ -74,7 +103,11 @@ const App = () => {
   
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      <Notification
+        message={notification?.message ?? null}
+        type={notification?.type}
+      />
       <Filter value={filter} onChange={(e) => setFilter(e.target.value)} />
       <PersonForm
         onSubmit={addPerson}
@@ -83,8 +116,8 @@ const App = () => {
         newNumber={newNumber}
         onNumberChange={(e) => setNewNumber(e.target.value)}
       />
-      <h2>Numbers</h2>
-      <Persons persons={personsToShow} />
+      <h1>Numbers</h1>
+      <Persons persons={personsToShow} deletePerson={deletePerson} />
       
     </div>
   )
