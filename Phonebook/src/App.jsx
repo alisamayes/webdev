@@ -26,9 +26,9 @@ const App = () => {
   }
 
   useEffect(() => {
-    personService.getAll().then(initialPersons => {
-      setPersons(initialPersons)
-    })
+    personService.getAll()
+      .then(initialPersons => setPersons(initialPersons))
+      .catch(() => showNotification('...', 'error'))
   }, [])
 
   const deletePerson = id => {
