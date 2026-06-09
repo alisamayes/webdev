@@ -9,8 +9,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
-    "test": "echo \\\"Error: no test specified\\\" && exit 1",
-    "server": "npm run dev --prefix backend"
+    "build": "npm install --prefix .. && npm run build --prefix .. && cp -r ../dist ./dist",
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
   },
   "dependencies": {
     "express": "^5.2.1",
