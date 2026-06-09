@@ -28,7 +28,12 @@ const App = () => {
   useEffect(() => {
     personService.getAll()
       .then(initialPersons => setPersons(initialPersons))
-      .catch(() => showNotification('...', 'error'))
+      .catch(() =>
+        showNotification(
+          'Failed to load phonebook data from the server',
+          'error'
+        )
+      )
   }, [])
 
   const deletePerson = id => {
