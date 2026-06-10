@@ -31,5 +31,12 @@ const user = new User({
 
 user.save().then(result => {
   console.log('user saved!')
+  //mongoose.connection.close()
+})
+
+User.find({}).then(result => {
+  result.forEach(note => {
+    console.log(note)
+  })
   mongoose.connection.close()
 })
