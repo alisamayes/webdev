@@ -42,6 +42,12 @@ const App = () => {
       .then(() => {
         setPersons(prev => prev.filter(p => String(p.id) !== String(id)))
       })
+      .catch(() => {
+        showNotification(
+          'Failed to delete person from the server',
+          'error'
+        )
+      })
   }
 
   const addPerson = (event) => {
