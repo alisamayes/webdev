@@ -2,7 +2,6 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 
 const express = require('express')
 const morgan = require('morgan')
-const mongoose = require('mongoose')
 const Person = require('./models/person')
 
 const app = express()
@@ -98,14 +97,6 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 
-const startServer = () => {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
-  })
-}
-
-if (mongoose.connection.readyState === 1) {
-  startServer()
-} else {
-  mongoose.connection.once('open', startServer)
-}
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})

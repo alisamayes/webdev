@@ -10,7 +10,8 @@
     "start": "node index.js",
     "dev": "node --watch index.js",
     "build": "npm install && npm install --prefix .. && npm run build --prefix .. && cp -r ../dist ./dist",
-    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+    "test": "echo \\\"Error: no test specified\\\" && exit 1",
+    "lint": "eslint ."
   },
   "dependencies": {
     "dotenv": "^17.4.2",
@@ -18,5 +19,11 @@
     "mongodb": "^7.2.0",
     "mongoose": "^9.6.3",
     "morgan": "^1.11.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "eslint": "^10.5.0",
+    "globals": "^17.6.0"
   }
 }
